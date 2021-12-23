@@ -1,0 +1,9 @@
+CREATE TABLE IF NOT EXISTS `movie`(
+   `id` INT AUTO_INCREMENT,
+   `name` VARCHAR(100) NOT NULL,
+   `director` VARCHAR(40) NOT NULL,
+   PRIMARY KEY ( `id` )
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+insert into movie(`name`,`director`) values ("战狼","吴京");
+insert into movie(`name`,`director`) values ("红海行动","某某某");
