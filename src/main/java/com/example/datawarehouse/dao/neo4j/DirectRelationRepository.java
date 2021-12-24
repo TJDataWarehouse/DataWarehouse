@@ -1,9 +1,9 @@
 package com.example.datawarehouse.dao.neo4j;
 
-import com.example.datawarehouse.entity.node.Movie;
+import com.example.datawarehouse.entity.relation.DirectRelation;
 import org.springframework.data.neo4j.repository.Neo4jRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface MovieRepository extends Neo4jRepository<Movie, Long> {
+public interface DirectRelationRepository extends Neo4jRepository<DirectRelation, Long> {
 }

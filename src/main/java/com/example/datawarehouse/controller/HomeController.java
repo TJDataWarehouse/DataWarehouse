@@ -1,6 +1,6 @@
 package com.example.datawarehouse.controller;
 
-import com.example.datawarehouse.entity.Movie;
+import com.example.datawarehouse.entity.MysqlMovie;
 import com.example.datawarehouse.service.mysql.MovieService;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,7 +15,7 @@ public class HomeController {
     MovieService movieService;
 
     @RequestMapping("/movie")
-    public List<Movie> getAllMovie() {
+    public List<MysqlMovie> getAllMovie() {
         return movieService.getAllMovie();
     }
 }

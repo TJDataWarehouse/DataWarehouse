@@ -1,13 +1,16 @@
 package com.example.datawarehouse.entity.relation;
 
+import com.example.datawarehouse.entity.node.Actor;
+import com.example.datawarehouse.entity.node.Director;
 import com.example.datawarehouse.entity.node.Movie;
-import com.example.datawarehouse.entity.node.Person;
+import lombok.Builder;
 import lombok.Data;
 import org.neo4j.ogm.annotation.*;
 
+@RelationshipEntity(type = "actRelation")
 @Data
-@RelationshipEntity(type = "DIRECTED")
-public class Directed {
+@Builder
+public class ActRelation {
 
     @Id
     @GeneratedValue
@@ -17,6 +20,5 @@ public class Directed {
     private Movie movie;
 
     @EndNode
-    private Person person;
-
+    private Actor actor;
 }
