@@ -21,4 +21,7 @@ public class CooperateRelation {
 
     @EndNode
     private Actor actor;
+
+    @Property(name = "frequency")
+    private int frequency;
 }

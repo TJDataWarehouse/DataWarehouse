@@ -8,7 +8,7 @@ import javax.annotation.Resource;
 import java.util.List;
 
 @Service
-public class MovieService {
+public class MysqlMovieService {
 
     @Resource
     MysqlMovieRepository mysqlMovieRepository;
