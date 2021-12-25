@@ -1,6 +1,5 @@
 package com.example.datawarehouse.controller;
 
-import com.example.datawarehouse.entity.MysqlMovie;
 import com.example.datawarehouse.service.mysql.MysqlMovieService;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
