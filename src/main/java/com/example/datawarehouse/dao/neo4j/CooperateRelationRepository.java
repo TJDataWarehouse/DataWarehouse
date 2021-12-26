@@ -10,4 +10,6 @@ import java.util.List;
 public interface CooperateRelationRepository extends Neo4jRepository<CooperateRelation, Long> {
 
     List<CooperateRelation> findAll();
+
+
 }

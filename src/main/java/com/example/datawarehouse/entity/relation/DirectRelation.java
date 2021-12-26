@@ -6,7 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import org.neo4j.ogm.annotation.*;
 
-@RelationshipEntity(type = "directRelation")
+@RelationshipEntity(type = "directorRelation")
 @Data
 @Builder
 public class DirectRelation {

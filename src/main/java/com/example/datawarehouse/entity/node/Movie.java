@@ -2,10 +2,12 @@ package com.example.datawarehouse.entity.node;
 
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.neo4j.ogm.annotation.GeneratedValue;
 import org.neo4j.ogm.annotation.Id;
 import org.neo4j.ogm.annotation.NodeEntity;
 import org.neo4j.ogm.annotation.Property;
+
 
 @NodeEntity(label = "movie")
 @Data
@@ -19,10 +21,10 @@ public class Movie {
     @Property(name = "asin")
     private String asin;
 
-    @Property(name = "movieName")
+    @Property(name = "movie_name")
     private String movieName;
 
-    @Property(name = "releaseTime")
+    @Property(name = "release_time")
     private String releaseTime;
 
     @Property(name = "rating")

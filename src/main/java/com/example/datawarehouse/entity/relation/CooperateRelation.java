@@ -17,11 +17,11 @@ public class CooperateRelation {
     private Long id;
 
     @StartNode
-    private Director director;
-
-    @EndNode
     private Actor actor;
 
-    @Property(name = "frequency")
-    private int frequency;
+    @EndNode
+    private Director director;
+
+//    @Property(name = "frequency")
+//    private int frequency;
 }
