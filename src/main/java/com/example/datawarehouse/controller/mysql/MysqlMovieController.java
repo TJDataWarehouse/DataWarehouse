@@ -1,6 +1,7 @@
 package com.example.datawarehouse.controller.mysql;
 
 import com.example.datawarehouse.entity.mysql.MysqlMovie;
+import com.example.datawarehouse.entity.mysql.MysqlReview;
 import com.example.datawarehouse.service.mysql.MysqlMovieService;
 import com.example.datawarehouse.utils.CommonResult;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,45 @@ public class MysqlMovieController {
 
     @Autowired
     private MysqlMovieService mysqlMovieService;
+
+    @GetMapping("get/movies/by/name")
+    public CommonResult<Map<String,Object>> getMoviesByName(@RequestParam("movie_name")String movieName){
+        //获取当前系统时间
+        long startTime =  System.currentTimeMillis();
+
+        List<MysqlMovie> movieList = mysqlMovieService.findMoviesByName(movieName);
+
+        Map<String,Object> map = new HashMap<>();
+        int number = 0;
+        List<Map<String ,Object>> movieInfoList = new ArrayList<>();
+        if(movieList != null){
+            number = movieList.size();
+            for(MysqlMovie movie: movieList){
+                Map<String ,Object> m = new HashMap<>();
+                m.put("format",movie.getFormat());
+                m.put("movie_name",movie.getMovieName());
+                movieInfoList.add(m);
+            }
+        }
+        map.put("movie",movieInfoList);
+
+        map.put("number",number);
+
+        //结束时间
+        long endTime =  System.currentTimeMillis();
+        double usedTime = (endTime-startTime);
+        String danWei = "ms";
+        if(usedTime>1000){
+            usedTime = usedTime/1000;
+            //保留3位小数
+            usedTime = (Math.round(usedTime * 1000) / 1000.0);
+            danWei = "s";
+        }
+        map.put("used_time",usedTime+danWei);
+
+        return CommonResult.success(map);
+    }
+
 
     //查询各个时间段的电影数都是用此接口
     @GetMapping("get/movie/number")
@@ -45,20 +85,12 @@ public class MysqlMovieController {
         }else if("day".equals(flag)){
             String time = date;
             movieNumber = mysqlMovieService.countMovieByYearAndMonthAndDay(time);
-        }else if("quater".equals(flag)){
-            if(quarter == null){
-                return CommonResult.failed("请指定quarter");
-            }
-            //TODO:季度查询
-//            movieNumber = mysqlMovieService.countMovieByQuarter(date,quarter);
-        }else if("week".equals(flag)){
-            if(week == null){
-                return CommonResult.failed("请指定week");
-            }
-            //TODO:周查询
-//            movieNumber = mysqlMovieService.countMovieByWeek(date,week);
+        }else if("quarter".equals(flag)){
+            //季度查询
+            movieNumber = mysqlMovieService.countMovieByPeriod(date,flag);
         }else{
-            return CommonResult.failed("需要提供查询粒度flag=year/month/day/quarter/week");
+            //周查询
+            movieNumber = mysqlMovieService.countMovieByPeriod(date,flag);
         }
 
         Map<String, Object> map = new HashMap<>();
@@ -230,5 +262,28 @@ public class MysqlMovieController {
         return CommonResult.success(map);
     }
 
+    //正面评价电影查询
+    @GetMapping("get/good/movie")
+    public CommonResult<Map<String, Object>> getGoodMovie(@RequestParam("rate")double rate){
+        //获取当前系统时间
+        long startTime =  System.currentTimeMillis();
 
+        List<Map<String,Object>> movieInfoList = mysqlMovieService.getGoodReviewRate(rate);
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("movie",movieInfoList);
+        //结束时间
+        long endTime =  System.currentTimeMillis();
+        double usedTime = (endTime-startTime);
+        String danWei = "ms";
+        if(usedTime>1000){
+            usedTime = usedTime/1000;
+            //保留3位小数
+            usedTime = (Math.round(usedTime * 1000) / 1000.0);
+            danWei = "s";
+        }
+        map.put("used_time",usedTime+danWei);
+
+        return CommonResult.success(map);
+    }
 }

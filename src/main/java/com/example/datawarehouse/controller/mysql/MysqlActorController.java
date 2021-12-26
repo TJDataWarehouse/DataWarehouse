@@ -49,9 +49,28 @@ public class MysqlActorController {
     }
 
     //查询合作最多的演员搭档
-//    @GetMapping("get/best/partners")
-//    public CommonResult<Map<String,Object>> getBestPartners(){
-//
-//    }
+    @GetMapping("get/best/partners")
+    public CommonResult<Map<String,Object>> getBestPartners(){
+        //获取当前系统时间
+        long startTime =  System.currentTimeMillis();
+
+        //先挑出来出演次数
+
+
+        Map<String ,Object> map = new HashMap<>();
+        //结束时间
+        long endTime =  System.currentTimeMillis();
+        double usedTime = (endTime-startTime);
+        String danWei = "ms";
+        if(usedTime>1000){
+            usedTime = usedTime/1000;
+            //保留3位小数
+            usedTime = (Math.round(usedTime * 1000) / 1000.0);
+            danWei = "s";
+        }
+        map.put("used_time",usedTime+danWei);
+
+        return CommonResult.success(map);
+    }
 
 }
