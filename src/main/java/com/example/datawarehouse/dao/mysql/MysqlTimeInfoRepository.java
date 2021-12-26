@@ -7,4 +7,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface MysqlTimeInfoRepository extends JpaRepository<MysqlTimeInfo,String> {
+
+    //根据id查
+    MysqlTimeInfo findMysqlTimeInfoById(String id);
 }
