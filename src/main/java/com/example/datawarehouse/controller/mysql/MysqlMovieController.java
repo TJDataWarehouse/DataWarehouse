@@ -1,5 +1,6 @@
 package com.example.datawarehouse.controller.mysql;
 
+import com.example.datawarehouse.entity.mysql.MysqlMovie;
 import com.example.datawarehouse.service.mysql.MysqlMovieService;
 import com.example.datawarehouse.service.mysql.MysqlMovieServiceImpl;
 import com.example.datawarehouse.utils.CommonResult;
@@ -8,12 +9,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
 @RestController
 @RequestMapping("mysql/movie")
 public class MysqlMovieController {
 
-    private MysqlMovieService mysqlMovieService = new MysqlMovieServiceImpl();
+    @Autowired
+    private MysqlMovieService mysqlMovieService;
 
     //查询各个时间段的电影数都是用此接口
     @GetMapping("get/movie/number")
@@ -52,5 +56,15 @@ public class MysqlMovieController {
         }
 
         return CommonResult.success(movieNumber);
+    }
+
+    @GetMapping("get/type/number")
+    public CommonResult<String> getTypeNumber(@RequestParam("movie_name")String movieName){
+        MysqlMovie mysqlMovie = mysqlMovieService.findMovieByName(movieName);
+        if(mysqlMovie == null){
+            return CommonResult.failed("没有找到同名电影");
+        }else{
+            return CommonResult.success(mysqlMovie.getFormat());
+        }
     }
 }

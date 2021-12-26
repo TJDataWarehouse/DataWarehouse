@@ -16,4 +16,5 @@ public interface MysqlMovieRepository extends JpaRepository<MysqlMovie,String> {
     @Query("select count(m) from MysqlMovie m where m.releaseTime like CONCAT('%',:time,'%')")
     int countMysqlMovieByReleaseTimeContaining(@Param("time")String time);
 
+    MysqlMovie findMysqlMovieByMovieName(String movieName);
 }
