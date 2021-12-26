@@ -4,6 +4,7 @@ import com.example.datawarehouse.entity.mysql.MysqlMovie;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public interface MysqlMovieService {
@@ -15,4 +16,6 @@ public interface MysqlMovieService {
     List<MysqlMovie> findMoviesByScore(double score,String flag);
     //按类别查询
     List<MysqlMovie> findMovieByType(String type);
+    //获取好评的电影
+    List<Map<String,Object>> getGoodReviewRate(double rate);
 }

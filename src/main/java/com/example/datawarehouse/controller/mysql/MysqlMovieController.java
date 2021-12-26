@@ -1,6 +1,7 @@
 package com.example.datawarehouse.controller.mysql;
 
 import com.example.datawarehouse.entity.mysql.MysqlMovie;
+import com.example.datawarehouse.entity.mysql.MysqlReview;
 import com.example.datawarehouse.service.mysql.MysqlMovieService;
 import com.example.datawarehouse.utils.CommonResult;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -230,5 +231,28 @@ public class MysqlMovieController {
         return CommonResult.success(map);
     }
 
+    //正面评价电影查询
+    @GetMapping("get/good/movie")
+    public CommonResult<Map<String, Object>> getGoodMovie(@RequestParam("rate")double rate){
+        //获取当前系统时间
+        long startTime =  System.currentTimeMillis();
 
+        List<Map<String,Object>> movieInfoList = mysqlMovieService.getGoodReviewRate(rate);
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("movie",movieInfoList);
+        //结束时间
+        long endTime =  System.currentTimeMillis();
+        double usedTime = (endTime-startTime);
+        String danWei = "ms";
+        if(usedTime>1000){
+            usedTime = usedTime/1000;
+            //保留3位小数
+            usedTime = (Math.round(usedTime * 1000) / 1000.0);
+            danWei = "s";
+        }
+        map.put("used_time",usedTime+danWei);
+
+        return CommonResult.success(map);
+    }
 }
