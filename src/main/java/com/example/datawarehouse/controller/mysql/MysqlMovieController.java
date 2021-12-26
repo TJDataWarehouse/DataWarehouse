@@ -80,7 +80,7 @@ public class MysqlMovieController {
 
     //查询电影format
     @GetMapping("get/movie/format")
-    public CommonResult<Map<String, Object>> getFormatNumber(@RequestParam("movie_format")String movieName){
+    public CommonResult<Map<String, Object>> getFormatNumber(@RequestParam("movie_name")String movieName){
         //获取当前系统时间
         long startTime =  System.currentTimeMillis();
 
