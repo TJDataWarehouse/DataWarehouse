@@ -33,7 +33,7 @@ public class MysqlMovieServiceImpl implements MysqlMovieService{
         if(">".equals(flag)){
             return mysqlMovieRepository.findMysqlMoviesByScoreGreaterThan(score);
         }else if(">=".equals(flag)){
-            return mysqlMovieRepository.findMysqlMoviesByScoreLessThanEqual(score);
+            return mysqlMovieRepository.findMysqlMoviesByScoreGreaterThanEqual(score);
         }else if("=".equals(flag)){
             return mysqlMovieRepository.findMysqlMoviesByScore(score);
         }else if("<".equals(flag)){
@@ -41,5 +41,10 @@ public class MysqlMovieServiceImpl implements MysqlMovieService{
         }else{
             return mysqlMovieRepository.findMysqlMoviesByScoreLessThanEqual(score);
         }
+    }
+
+    @Override
+    public List<MysqlMovie> findMovieByType(String type) {
+        return mysqlMovieRepository.findMysqlMoviesByTypeContaining(type);
     }
 }

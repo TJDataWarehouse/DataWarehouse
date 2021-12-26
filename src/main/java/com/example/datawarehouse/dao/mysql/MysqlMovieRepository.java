@@ -28,4 +28,5 @@ public interface MysqlMovieRepository extends JpaRepository<MysqlMovie,String> {
 
     List<MysqlMovie> findMysqlMoviesByScore(double score);
 
+    List<MysqlMovie> findMysqlMoviesByTypeContaining(String type);
 }

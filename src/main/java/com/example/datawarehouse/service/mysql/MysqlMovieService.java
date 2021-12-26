@@ -13,4 +13,6 @@ public interface MysqlMovieService {
     MysqlMovie findMovieByName(String name);
     //按分数查询
     List<MysqlMovie> findMoviesByScore(double score,String flag);
+    //按类别查询
+    List<MysqlMovie> findMovieByType(String type);
 }
