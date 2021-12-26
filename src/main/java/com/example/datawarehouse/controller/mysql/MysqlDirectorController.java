@@ -17,6 +17,7 @@ public class MysqlDirectorController {
     @Autowired
     MysqlDirectorMovieService mysqlDirectorMovieService;
 
+    //导演的电影数
     @GetMapping("get/director/movie/number")
     public CommonResult<Integer> getMovieNumber(@RequestParam("director_name")String director_name){
         List<MysqlDirectorMovie> directorMovieList = mysqlDirectorMovieService.findDirectMovie(director_name);

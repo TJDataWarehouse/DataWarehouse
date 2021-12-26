@@ -17,4 +17,15 @@ public interface MysqlMovieRepository extends JpaRepository<MysqlMovie,String> {
     int countMysqlMovieByReleaseTimeContaining(@Param("time")String time);
 
     MysqlMovie findMysqlMovieByMovieName(String movieName);
+
+    List<MysqlMovie> findMysqlMoviesByScoreGreaterThanEqual(double score);
+
+    List<MysqlMovie> findMysqlMoviesByScoreGreaterThan(double score);
+
+    List<MysqlMovie> findMysqlMoviesByScoreLessThanEqual(double score);
+
+    List<MysqlMovie> findMysqlMoviesByScoreLessThan(double score);
+
+    List<MysqlMovie> findMysqlMoviesByScore(double score);
+
 }

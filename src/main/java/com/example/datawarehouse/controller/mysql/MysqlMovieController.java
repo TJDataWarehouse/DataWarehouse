@@ -9,9 +9,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 @RestController
 @RequestMapping("mysql/movie")
 public class MysqlMovieController {
+    private static int displayMovieNumber = 4;
 
     @Autowired
     private MysqlMovieService mysqlMovieService;
@@ -77,5 +83,52 @@ public class MysqlMovieController {
         }
     }
 
+    //按评分查询电影
+    @GetMapping("get/movie/by/score")
+    public CommonResult<Map<String,Object>> getMovieByScore(@RequestParam("score")double score,
+                                                                  @RequestParam(value = "flag",required = false)String flag){
+        /** 获取当前系统时间*/
+        long startTime =  System.currentTimeMillis();
+
+        //按照“>= == <=”score查电影
+        List<MysqlMovie> movieList = mysqlMovieService.findMoviesByScore(score,flag);
+        //返回信息
+        Map<String,Object> map = new HashMap<>();
+        //电影信息
+        List<Map<String, Object>> movieInfoList = new ArrayList<>();
+
+        if(movieList == null){
+            map.put("number",0);
+            map.put("movie",movieInfoList);
+        }else{
+            map.put("number",movieList.size());
+            int count = displayMovieNumber;
+            if(movieList.size()<displayMovieNumber){
+                count = movieInfoList.size();
+            }
+            for(int i =0;i < count;i++){
+                Map<String,Object> m = new HashMap<>();
+                m.put("movie_name",movieList.get(i).getMovieName());
+                m.put("release_time",movieList.get(i).getReleaseTime());
+                m.put("directors",movieList.get(i).getDirectors());
+                m.put("actors",movieList.get(i).getActors());
+                m.put("score",movieList.get(i).getScore());
+                movieInfoList.add(m);
+            }
+        }
+
+        //结束时间
+        long endTime =  System.currentTimeMillis();
+        double usedTime = (endTime-startTime);
+        String danWei = "ms";
+        if(usedTime>1000){
+            usedTime = usedTime/1000;
+            danWei = "s";
+        }
+
+        map.put("movie",movieInfoList);
+        map.put("used_time",usedTime+danWei);
+        return CommonResult.success(map);
+    }
 
 }

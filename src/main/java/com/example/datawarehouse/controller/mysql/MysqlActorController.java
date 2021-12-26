@@ -17,6 +17,7 @@ public class MysqlActorController {
     @Autowired
     MysqlActorMovieService mysqlActorMovieService;
 
+    //参演的电影数目
     @GetMapping("get/actor/movie/number")
     public CommonResult<Integer> getMovieNumber(@RequestParam("actor_name")String actorName){
         List<MysqlActorMovie> actorMovieList = mysqlActorMovieService.findActorMovie(actorName);
@@ -26,5 +27,7 @@ public class MysqlActorController {
             return CommonResult.success(0);
         }
     }
+
+
 
 }

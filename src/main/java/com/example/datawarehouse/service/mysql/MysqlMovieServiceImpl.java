@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @Service
 public class MysqlMovieServiceImpl implements MysqlMovieService{
@@ -25,5 +26,20 @@ public class MysqlMovieServiceImpl implements MysqlMovieService{
     @Override
     public MysqlMovie findMovieByName(String name) {
         return mysqlMovieRepository.findMysqlMovieByMovieName(name);
+    }
+
+    @Override
+    public List<MysqlMovie> findMoviesByScore(double score, String flag) {
+        if(">".equals(flag)){
+            return mysqlMovieRepository.findMysqlMoviesByScoreGreaterThan(score);
+        }else if(">=".equals(flag)){
+            return mysqlMovieRepository.findMysqlMoviesByScoreLessThanEqual(score);
+        }else if("=".equals(flag)){
+            return mysqlMovieRepository.findMysqlMoviesByScore(score);
+        }else if("<".equals(flag)){
+            return mysqlMovieRepository.findMysqlMoviesByScoreLessThan(score);
+        }else{
+            return mysqlMovieRepository.findMysqlMoviesByScoreLessThanEqual(score);
+        }
     }
 }
