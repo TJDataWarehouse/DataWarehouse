@@ -1,19 +1,16 @@
 package com.example.datawarehouse.service.mysql;
 
-import com.example.datawarehouse.dao.mysql.MysqlMovieRepository;
-import com.example.datawarehouse.entity.MysqlMovie;
+import com.example.datawarehouse.entity.mysql.MysqlMovie;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import java.util.List;
 
 @Service
-public class MysqlMovieService {
-
-    @Resource
-    MysqlMovieRepository mysqlMovieRepository;
-
-    public List<MysqlMovie> getAllMovie() {
-        return mysqlMovieRepository.findAll();
-    }
+public interface MysqlMovieService {
+    //相关年、年月、年月日查询
+    int countMovieByYearAndMonthAndDay(String time);
+    //用电影名查询
+    MysqlMovie findMovieByName(String name);
+    //按分数查询
+    List<MysqlMovie> findMoviesByScore(double score,String flag);
 }
