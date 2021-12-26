@@ -110,17 +110,17 @@ public class MysqlMovie {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        MysqlMovie that = (MysqlMovie) o;
+        MysqlMovie movie = (MysqlMovie) o;
 
-        if (Double.compare(that.score, score) != 0) return false;
-        if (asin != null ? !asin.equals(that.asin) : that.asin != null) return false;
-        if (movieName != null ? !movieName.equals(that.movieName) : that.movieName != null) return false;
-        if (releaseTime != null ? !releaseTime.equals(that.releaseTime) : that.releaseTime != null) return false;
-        if (rating != null ? !rating.equals(that.rating) : that.rating != null) return false;
-        if (format != null ? !format.equals(that.format) : that.format != null) return false;
-        if (actors != null ? !actors.equals(that.actors) : that.actors != null) return false;
-        if (directors != null ? !directors.equals(that.directors) : that.directors != null) return false;
-        if (type != null ? !type.equals(that.type) : that.type != null) return false;
+        if (Double.compare(movie.score, score) != 0) return false;
+        if (asin != null ? !asin.equals(movie.asin) : movie.asin != null) return false;
+        if (movieName != null ? !movieName.equals(movie.movieName) : movie.movieName != null) return false;
+        if (releaseTime != null ? !releaseTime.equals(movie.releaseTime) : movie.releaseTime != null) return false;
+        if (rating != null ? !rating.equals(movie.rating) : movie.rating != null) return false;
+        if (format != null ? !format.equals(movie.format) : movie.format != null) return false;
+        if (actors != null ? !actors.equals(movie.actors) : movie.actors != null) return false;
+        if (directors != null ? !directors.equals(movie.directors) : movie.directors != null) return false;
+        if (type != null ? !type.equals(movie.type) : movie.type != null) return false;
 
         return true;
     }
