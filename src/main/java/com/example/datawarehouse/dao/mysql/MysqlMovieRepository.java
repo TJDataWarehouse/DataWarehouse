@@ -11,6 +11,7 @@ import java.util.List;
 
 @Repository
 public interface MysqlMovieRepository extends JpaRepository<MysqlMovie,String> {
+    List<MysqlMovie> findMysqlMoviesByMovieNameContaining(String name);
 
     //查询发布时间包含某字段的电影的数量
     @Query("select count(m) from MysqlMovie m where m.releaseTime like CONCAT('%',:time,'%')")

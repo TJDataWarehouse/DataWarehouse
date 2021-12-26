@@ -23,6 +23,44 @@ public class MysqlMovieController {
     @Autowired
     private MysqlMovieService mysqlMovieService;
 
+    @GetMapping("get/movies/by/name")
+    public CommonResult<Map<String,Object>> getMoviesByName(@RequestParam("movie_name")String movieName){
+        //获取当前系统时间
+        long startTime =  System.currentTimeMillis();
+
+        List<MysqlMovie> movieList = mysqlMovieService.findMoviesByName(movieName);
+
+        Map<String,Object> map = new HashMap<>();
+        int number = 0;
+        List<Map<String ,Object>> movieInfoList = new ArrayList<>();
+        if(movieList != null){
+            number = movieList.size();
+            for(MysqlMovie movie: movieList){
+                Map<String ,Object> m = new HashMap<>();
+                m.put("format",movie.getFormat());
+                m.put("movie_name",movie.getMovieName());
+                movieInfoList.add(m);
+            }
+        }
+
+        map.put("number",number);
+
+        //结束时间
+        long endTime =  System.currentTimeMillis();
+        double usedTime = (endTime-startTime);
+        String danWei = "ms";
+        if(usedTime>1000){
+            usedTime = usedTime/1000;
+            //保留3位小数
+            usedTime = (Math.round(usedTime * 1000) / 1000.0);
+            danWei = "s";
+        }
+        map.put("used_time",usedTime+danWei);
+
+        return CommonResult.success(map);
+    }
+
+
     //查询各个时间段的电影数都是用此接口
     @GetMapping("get/movie/number")
     public CommonResult<Map<String, Object>> getMovieNumber(@RequestParam(value = "date")String date,

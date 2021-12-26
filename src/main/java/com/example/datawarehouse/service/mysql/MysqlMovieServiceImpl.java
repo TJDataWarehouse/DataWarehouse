@@ -23,6 +23,11 @@ public class MysqlMovieServiceImpl implements MysqlMovieService{
     @Resource
     private MysqlReviewRepository mysqlReviewRepository;
 
+    @Override
+    public List<MysqlMovie> findMoviesByName(String movieName) {
+        return mysqlMovieRepository.findMysqlMoviesByMovieNameContaining(movieName);
+    }
+
     //辅助函数，用于将字符串转为日历
     private Calendar stringToCalendar(String time){
         //将字符串转为date
