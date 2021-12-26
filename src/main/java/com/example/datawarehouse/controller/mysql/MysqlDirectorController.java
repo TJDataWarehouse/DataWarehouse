@@ -1,6 +1,5 @@
 package com.example.datawarehouse.controller.mysql;
 
-
 import com.example.datawarehouse.entity.mysql.MysqlDirectorMovie;
 import com.example.datawarehouse.service.mysql.MysqlDirectorMovieService;
 import com.example.datawarehouse.utils.CommonResult;
@@ -20,11 +19,11 @@ public class MysqlDirectorController {
 
     @GetMapping("get/director/movie/number")
     public CommonResult<Integer> getMovieNumber(@RequestParam("director_name")String director_name){
-        List<MysqlDirectorMovie> directorMovieList = mysqlDirectorMovieService.getDirectMovie(director_name);
+        List<MysqlDirectorMovie> directorMovieList = mysqlDirectorMovieService.findDirectMovie(director_name);
         if(directorMovieList != null){
             return CommonResult.success(directorMovieList.size());
         }else{
-            return CommonResult.failed(0);
+            return CommonResult.success(0);
         }
     }
 

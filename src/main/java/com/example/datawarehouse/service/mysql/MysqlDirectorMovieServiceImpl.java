@@ -13,7 +13,7 @@ public class MysqlDirectorMovieServiceImpl implements MysqlDirectorMovieService{
     MysqlDirectorMovieRepository mysqlDirectorMovieRepository;
 
     @Override
-    public List<MysqlDirectorMovie> getDirectMovie(String directorName) {
+    public List<MysqlDirectorMovie> findDirectMovie(String directorName) {
         return mysqlDirectorMovieRepository.findMysqlDirectorMoviesByName(directorName);
     }
 }
