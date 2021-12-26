@@ -42,6 +42,7 @@ public class MysqlMovieController {
                 movieInfoList.add(m);
             }
         }
+        map.put("movie",movieInfoList);
 
         map.put("number",number);
 
