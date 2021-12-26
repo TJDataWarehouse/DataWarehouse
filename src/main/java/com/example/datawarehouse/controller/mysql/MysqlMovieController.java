@@ -46,20 +46,12 @@ public class MysqlMovieController {
         }else if("day".equals(flag)){
             String time = date;
             movieNumber = mysqlMovieService.countMovieByYearAndMonthAndDay(time);
-        }else if("quater".equals(flag)){
-            if(quarter == null){
-                return CommonResult.failed("请指定quarter");
-            }
-            //TODO:季度查询
-//            movieNumber = mysqlMovieService.countMovieByQuarter(date,quarter);
-        }else if("week".equals(flag)){
-            if(week == null){
-                return CommonResult.failed("请指定week");
-            }
-            //TODO:周查询
-//            movieNumber = mysqlMovieService.countMovieByWeek(date,week);
+        }else if("quarter".equals(flag)){
+            //季度查询
+            movieNumber = mysqlMovieService.countMovieByPeriod(date,flag);
         }else{
-            return CommonResult.failed("需要提供查询粒度flag=year/month/day/quarter/week");
+            //周查询
+            movieNumber = mysqlMovieService.countMovieByPeriod(date,flag);
         }
 
         Map<String, Object> map = new HashMap<>();

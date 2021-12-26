@@ -10,10 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @Service
 public class MysqlMovieServiceImpl implements MysqlMovieService{
@@ -23,9 +23,50 @@ public class MysqlMovieServiceImpl implements MysqlMovieService{
     @Resource
     private MysqlReviewRepository mysqlReviewRepository;
 
+    //辅助函数，用于将字符串转为日历
+    private Calendar stringToCalendar(String time){
+        //将字符串转为date
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = new Date();
+        try {
+            date = dateFormat.parse(time);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        //用date生成日历对象
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        return cal;
+    }
+
     @Override
     public int countMovieByYearAndMonthAndDay(String yearAndMonthAndDay){
         return mysqlMovieRepository.countMysqlMovieByReleaseTimeContaining(yearAndMonthAndDay);
+    }
+
+    @Override
+    public int countMovieByPeriod(String time,String flag) {
+        int number= 0;
+        //找到当天的日历
+        Calendar calendar = stringToCalendar(time);
+        System.out.println(calendar.getTime());
+        if("quarter".equals(flag)){
+            calendar.add(Calendar.MONTH,-1);
+        }else{
+            calendar.add(Calendar.DAY_OF_YEAR,-7);
+        }
+        //现在
+        String after = time;
+        //过去
+        Date date = calendar.getTime();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String before = simpleDateFormat.format(date);
+        //开始查询
+        List<MysqlMovie> movieList = mysqlMovieRepository.findMysqlMoviesByReleaseTimeBetween(before,after);
+        if(movieList!=null){
+            number = movieList.size();
+        }
+        return number;
     }
 
     @Override

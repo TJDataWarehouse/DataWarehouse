@@ -8,8 +8,10 @@ import java.util.Map;
 
 @Service
 public interface MysqlMovieService {
-    //相关年、年月、年月日查询
+    //相关年、年月、年月日查询电影数
     int countMovieByYearAndMonthAndDay(String time);
+    //最近一周的电影新增量
+    int countMovieByPeriod(String time,String flag);
     //用电影名查询
     MysqlMovie findMovieByName(String name);
     //按分数查询
@@ -18,4 +20,5 @@ public interface MysqlMovieService {
     List<MysqlMovie> findMovieByType(String type);
     //获取好评的电影
     List<Map<String,Object>> getGoodReviewRate(double rate);
+
 }
