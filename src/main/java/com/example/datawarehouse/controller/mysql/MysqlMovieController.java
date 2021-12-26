@@ -2,15 +2,12 @@ package com.example.datawarehouse.controller.mysql;
 
 import com.example.datawarehouse.entity.mysql.MysqlMovie;
 import com.example.datawarehouse.service.mysql.MysqlMovieService;
-import com.example.datawarehouse.service.mysql.MysqlMovieServiceImpl;
 import com.example.datawarehouse.utils.CommonResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
-import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
 @RestController
 @RequestMapping("mysql/movie")
@@ -58,8 +55,9 @@ public class MysqlMovieController {
         return CommonResult.success(movieNumber);
     }
 
-    @GetMapping("get/type/number")
-    public CommonResult<String> getTypeNumber(@RequestParam("movie_name")String movieName){
+    //查询电影format
+    @GetMapping("get/movie/format")
+    public CommonResult<String> getFormatNumber(@RequestParam("movie_name")String movieName){
         MysqlMovie mysqlMovie = mysqlMovieService.findMovieByName(movieName);
         if(mysqlMovie == null){
             return CommonResult.failed("没有找到同名电影");
@@ -67,4 +65,17 @@ public class MysqlMovieController {
             return CommonResult.success(mysqlMovie.getFormat());
         }
     }
+
+    //查询电影type
+    @GetMapping("get/movie/type")
+    public CommonResult<String> getTypeNumber(@RequestParam("movie_name")String movieName){
+        MysqlMovie mysqlMovie = mysqlMovieService.findMovieByName(movieName);
+        if(mysqlMovie == null){
+            return CommonResult.failed("没有找到同名电影");
+        }else{
+            return CommonResult.success(mysqlMovie.getType());
+        }
+    }
+
+
 }
