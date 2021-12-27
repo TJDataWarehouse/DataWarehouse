@@ -12,6 +12,7 @@ public class MovieService {
 
     @Resource
     MovieRepository movieRepository;
+
     String[] month = {"January","February","March","April","May","June","July","August","September","October","November","December"};
 
     //按照时间查询电影
@@ -43,5 +44,15 @@ public class MovieService {
     //按照演员查询
     public List<Movie> findByActorName(String actorName) {
         return movieRepository.findMovieByActorName(actorName);
+    }
+
+    //按照电影类别查询
+    public List<Movie> findByMovieType(String type) {
+        return movieRepository.findByType(type);
+    }
+
+    //按照用户评价查询
+    public List<Movie> findByScoreGreaterThan(double score) {
+        return movieRepository.findByScoreGreaterThan(score);
     }
 }

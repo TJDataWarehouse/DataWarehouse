@@ -11,13 +11,14 @@ import java.util.List;
 @Repository
 public interface MovieRepository extends Neo4jRepository<Movie, Long> {
 
-    @Query("MATCH (n) WHERE n.releaseTime ends with $year RETURN n")
+    @Query("MATCH (n:movie) WHERE n.release_time ends with $year RETURN n")
     List<Movie> findByReleaseYear(@Param("year") String year);
 
-    @Query("MATCH (n) WHERE n.releaseTime ends with $year and n.releaseTime starts with $month RETURN n")
+    @Query("MATCH (n:movie) WHERE n.release_time ends with $year and n.releaseTime starts with $month RETURN n")
     List<Movie> findByReleaseYearAndMonth(@Param("year") String year, @Param("month") String month);
 
-    List<Movie> findByMovieName(String movieName);
+    @Query("MATCH (n:movie) WHERE n.movie_name = $movieName RETURN n")
+    List<Movie> findByMovieName(@Param("movieName") String movieName);
 
     @Query("MATCH (m:movie)-[r:directRelation]->(d:director) WHERE d.directorName = $directorName RETURN m")
     List<Movie> findMovieByDirectorName(@Param("directorName") String directorName);

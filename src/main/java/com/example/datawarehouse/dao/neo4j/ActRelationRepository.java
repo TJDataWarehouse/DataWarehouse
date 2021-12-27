@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ActRelationRepository extends Neo4jRepository<ActRelation, Long> {
+
 }
