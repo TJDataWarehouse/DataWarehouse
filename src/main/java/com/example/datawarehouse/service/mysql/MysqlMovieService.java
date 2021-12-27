@@ -8,6 +8,8 @@ import java.util.Map;
 
 @Service
 public interface MysqlMovieService {
+    //根据asin查电影信息
+    MysqlMovie findMovieByAsin(String asin);
     //根据名字查电影
     List<MysqlMovie> findMoviesByName(String movieName);
     //相关年、年月、年月日查询电影数

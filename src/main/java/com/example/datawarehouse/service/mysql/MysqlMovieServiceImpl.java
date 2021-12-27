@@ -24,6 +24,11 @@ public class MysqlMovieServiceImpl implements MysqlMovieService{
     private MysqlReviewRepository mysqlReviewRepository;
 
     @Override
+    public MysqlMovie findMovieByAsin(String asin) {
+        return mysqlMovieRepository.findMysqlMovieByAsin(asin);
+    }
+
+    @Override
     public List<MysqlMovie> findMoviesByName(String movieName) {
         return mysqlMovieRepository.findMysqlMoviesByMovieNameContaining(movieName);
     }

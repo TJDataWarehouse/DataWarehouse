@@ -11,6 +11,8 @@ import java.util.List;
 
 @Repository
 public interface MysqlMovieRepository extends JpaRepository<MysqlMovie,String> {
+    MysqlMovie findMysqlMovieByAsin(String asin);
+
     List<MysqlMovie> findMysqlMoviesByMovieNameContaining(String name);
 
     //查询发布时间包含某字段的电影的数量
