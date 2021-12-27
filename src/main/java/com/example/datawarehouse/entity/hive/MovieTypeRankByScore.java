@@ -8,18 +8,18 @@ package com.example.datawarehouse.entity.hive;
  * @createTime 2021年12月26日 21:29:00
  */
 public class MovieTypeRankByScore {
-    private String movie_name;
+    private String type;
     private double score;
 
     public MovieTypeRankByScore() {
     }
 
-    public String getMovie_name() {
-        return movie_name;
+    public String getType() {
+        return type;
     }
 
-    public void setMovie_name(String movie_name) {
-        this.movie_name = movie_name;
+    public void setType(String type) {
+        this.type = type;
     }
 
     public double getScore() {

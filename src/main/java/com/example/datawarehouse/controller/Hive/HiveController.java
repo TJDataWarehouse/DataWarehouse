@@ -3,6 +3,7 @@ package com.example.datawarehouse.controller.Hive;
 import com.example.datawarehouse.entity.hive.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -214,7 +215,7 @@ public class HiveController {
         return map;
     }
 
-    // 好评率大于n的电影数量
+    // 好评率大于n的电影数量 √
     @RequestMapping("movie_good_review_rate")
     public Map<String, Object> queryMovieGoodReviewRate(@RequestParam(value = "rate", required = true) String rate) {
         Map<String, Object> map = new HashMap<>();
@@ -242,15 +243,15 @@ public class HiveController {
     @RequestMapping("movie_type_rank")
     public Map<String, Object> queryTypeRank(@RequestParam(value = "value", required = true) String value) {
         Map<String, Object> map = new HashMap<>();
-        String sql1 = "select type,movie_count from ads_movie_type_topN order by movie_count";
-        String sql2 = "select type,score from ads_movie_type_topN order by score";
-        List<MovieTypeRankByCount> resultList1=null;
-        List<MovieTypeRankByScore> resultList2=null;
+        String sql1 = "select type,movie_count from ads_movie_type_topN order by movie_count desc";
+        String sql2 = "select type,score from ads_movie_type_topN order by score desc";
+        List<MovieTypeRankByCount> resultList1 = null;
+        List<MovieTypeRankByScore> resultList2 = null;
         long startTime = System.currentTimeMillis();
-        if ("count".equals(value)){
-            resultList1 = jdbcTemplate.queryForList(sql1, MovieTypeRankByCount.class);
-        } else if ("score".equals(value)){
-            resultList2 = jdbcTemplate.queryForList(sql2, MovieTypeRankByScore.class);
+        if ("count".equals(value)) {
+            resultList1 = jdbcTemplate.query(sql1, new Object[]{}, new BeanPropertyRowMapper<MovieTypeRankByCount>(MovieTypeRankByCount.class));
+        } else if ("score".equals(value)) {
+            resultList2 = jdbcTemplate.query(sql2, new Object[]{}, new BeanPropertyRowMapper<MovieTypeRankByScore>(MovieTypeRankByScore.class));
         }
         long endTime = System.currentTimeMillis();
 
@@ -262,11 +263,11 @@ public class HiveController {
             usedTime = (Math.round(usedTime * 1000) / 1000.0);
             danWei = "s";
         }
-        if (resultList1!=null){
-            resultList1=resultList1.subList(0,11);
+        if (resultList1 != null) {
+            resultList1 = resultList1.subList(0, 11);
             map.put("result", resultList1);
-        }else{
-            resultList2=resultList2.subList(0,11);
+        } else {
+            resultList2 = resultList2.subList(0, 11);
             map.put("result", resultList2);
         }
         map.put("time", usedTime + danWei);
@@ -277,15 +278,15 @@ public class HiveController {
     @RequestMapping("movie_rank")
     public Map<String, Object> queryMovieRank(@RequestParam(value = "value", required = true) String value) {
         Map<String, Object> map = new HashMap<>();
-        String sql1 = "select asin,review_count from ads_movie_heat_topN_new order by review_count";
-        String sql2 = "select asin,review_good_count from ads_movie_heat_topN_new order by review_good_count";
-        List<MovieRankByReview> resultList1=null;
-        List<MovieRankByGoodReivew> resultList2=null;
+        String sql1 = "select asin,review_count from ads_movie_heat_topN_new order by review_count desc";
+        String sql2 = "select asin,review_good_count from ads_movie_heat_topN_new order by review_good_count desc";
+        List<MovieRankByReview> resultList1 = null;
+        List<MovieRankByGoodReivew> resultList2 = null;
         long startTime = System.currentTimeMillis();
-        if ("review_count".equals(value)){
-            resultList1 = jdbcTemplate.queryForList(sql1, MovieRankByReview.class);
-        } else if ("review_good_count".equals(value)){
-            resultList2 = jdbcTemplate.queryForList(sql2, MovieRankByGoodReivew.class);
+        if ("review_count".equals(value)) {
+            resultList1 = jdbcTemplate.query(sql1, new Object[]{}, new BeanPropertyRowMapper<MovieRankByReview>(MovieRankByReview.class));
+        } else if ("review_good_count".equals(value)) {
+            resultList2 = jdbcTemplate.query(sql2, new Object[]{}, new BeanPropertyRowMapper<MovieRankByGoodReivew>(MovieRankByGoodReivew.class));
         }
         long endTime = System.currentTimeMillis();
 
@@ -297,11 +298,11 @@ public class HiveController {
             usedTime = (Math.round(usedTime * 1000) / 1000.0);
             danWei = "s";
         }
-        if (resultList1!=null){
-            resultList1=resultList1.subList(0,11);
+        if (resultList1 != null) {
+            resultList1 = resultList1.subList(0, 11);
             map.put("result", resultList1);
-        }else{
-            resultList2=resultList2.subList(0,11);
+        } else {
+            resultList2 = resultList2.subList(0, 11);
             map.put("result", resultList2);
         }
         map.put("time", usedTime + danWei);

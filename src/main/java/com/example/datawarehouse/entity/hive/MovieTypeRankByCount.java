@@ -8,25 +8,25 @@ package com.example.datawarehouse.entity.hive;
  * @createTime 2021年12月26日 21:27:00
  */
 public class MovieTypeRankByCount {
-    private String movie_name;
+    private String type;
     private long movie_count;
 
     public MovieTypeRankByCount() {
     }
 
-    public String getMovie_name() {
-        return movie_name;
+    public String getType() {
+        return type;
     }
 
-    public void setMovie_name(String movie_name) {
-        this.movie_name = movie_name;
+    public void setType(String type) {
+        this.type = type;
     }
 
     public long getMovie_count() {
         return movie_count;
     }
 
-    public void setMovie_count(int movie_count) {
+    public void setMovie_count(long movie_count) {
         this.movie_count = movie_count;
     }
 }
