@@ -59,14 +59,27 @@ public class MysqlMovieServiceImpl implements MysqlMovieService{
         int number= 0;
         //找到当天的日历
         Calendar calendar = stringToCalendar(time);
+        String[] timeArray = time.split("-");
+        int month = Integer.parseInt(timeArray[1]);
+        int season = (month-1) / 3 + 1;
+        int finalMonth = season*3;
+        int startMonth = finalMonth - 2;
         System.out.println(calendar.getTime());
         if("quarter".equals(flag)){
-            calendar.add(Calendar.MONTH,-1);
+            calendar.add(Calendar.MONTH,startMonth-month);
         }else{
             calendar.add(Calendar.DAY_OF_YEAR,-7);
         }
         //现在
         String after = time;
+        if("quarter".equals(flag)){
+            String temp = finalMonth+"";
+            if(finalMonth<10) {
+                after = timeArray[0] +"-"+ "0" +temp +"-"+ timeArray[2];
+            }else{
+                after =  timeArray[0] +"-"+ temp +"-"+ timeArray[2];
+            }
+        }
         //过去
         Date date = calendar.getTime();
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
